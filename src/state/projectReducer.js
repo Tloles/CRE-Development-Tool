@@ -187,6 +187,36 @@ export function projectReducer(state, action) {
         research: { ...state.research, [action.payload.step]: action.payload.data },
       }
 
+    // --- Parcel Intelligence ---
+    case 'UPDATE_PARCEL_PREFS':
+      return {
+        ...state,
+        parcelIntelligence: {
+          ...state.parcelIntelligence,
+          preferences: { ...state.parcelIntelligence.preferences, ...action.payload },
+        },
+      }
+
+    case 'ADD_TO_WATCHLIST':
+      return {
+        ...state,
+        parcelIntelligence: {
+          ...state.parcelIntelligence,
+          watchlist: [...state.parcelIntelligence.watchlist, action.payload],
+        },
+      }
+
+    case 'REMOVE_FROM_WATCHLIST':
+      return {
+        ...state,
+        parcelIntelligence: {
+          ...state.parcelIntelligence,
+          watchlist: state.parcelIntelligence.watchlist.filter(
+            (item) => item.parcelId !== action.payload
+          ),
+        },
+      }
+
     default:
       return state
   }

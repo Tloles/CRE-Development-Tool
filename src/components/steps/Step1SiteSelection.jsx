@@ -1,14 +1,33 @@
+import { useState } from 'react'
 import { useProject, useDispatch } from '../../state/ProjectContext.jsx'
+import { geocodeLocation } from '../../utils/publicApis.js'
+import InteractiveMap from '../map/InteractiveMap.jsx'
 import MacroDashboard from '../research/MacroDashboard.jsx'
 import SectorResearch from '../research/SectorResearch.jsx'
 import DriversOfChange from '../research/DriversOfChange.jsx'
 import SpreadCalculator from '../financial/SpreadCalculator.jsx'
 import AIAnalysisPanel from '../shared/AIAnalysisPanel.jsx'
-import { Search, MapPin } from 'lucide-react'
+import { Search, MapPin, Loader2 } from 'lucide-react'
 
 export default function Step1SiteSelection() {
-  const { project } = useProject()
+  const { project, siteSelection } = useProject()
   const dispatch = useDispatch()
+  const [geocoding, setGeocoding] = useState(false)
+  const [geocodeError, setGeocodeError] = useState(null)
+
+  async function handleGeocode() {
+    if (!project.location.trim()) return
+    setGeocoding(true)
+    setGeocodeError(null)
+
+    const result = await geocodeLocation(project.location)
+    if (result) {
+      dispatch({ type: 'SET_GEOCODED', payload: result })
+    } else {
+      setGeocodeError('Could not geocode this address. Try a more specific address.')
+    }
+    setGeocoding(false)
+  }
 
   return (
     <div className="space-y-6">
@@ -24,7 +43,7 @@ export default function Step1SiteSelection() {
           </div>
           <h2 className="text-xl font-bold text-text-primary">Site Selection & Due Diligence</h2>
           <p className="text-sm text-text-secondary mt-1">
-            Define your project, assess the macro environment, analyze site fundamentals, and build your investment thesis.
+            Define your project, locate the site on the map, and explore parcel-level opportunity data.
           </p>
         </div>
       </div>
@@ -49,13 +68,35 @@ export default function Step1SiteSelection() {
             <label className="block text-[11px] uppercase tracking-wider text-text-muted font-medium mb-1.5">
               <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> Location / Address</span>
             </label>
-            <input
-              type="text"
-              value={project.location}
-              onChange={(e) => dispatch({ type: 'UPDATE_PROJECT', payload: { location: e.target.value } })}
-              placeholder="e.g., Peachtree Corners, GA"
-              className="w-full bg-white border border-border-default rounded-lg px-3 py-2 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-1 focus:ring-accent-intelligence/50 focus:border-accent-intelligence/50 transition-colors"
-            />
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={project.location}
+                onChange={(e) => dispatch({ type: 'UPDATE_PROJECT', payload: { location: e.target.value } })}
+                onKeyDown={(e) => e.key === 'Enter' && handleGeocode()}
+                placeholder="e.g., 3000 Peachtree Rd, Atlanta, GA"
+                className="flex-1 bg-white border border-border-default rounded-lg px-3 py-2 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-1 focus:ring-accent-intelligence/50 focus:border-accent-intelligence/50 transition-colors"
+              />
+              <button
+                onClick={handleGeocode}
+                disabled={geocoding || !project.location.trim()}
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-accent-intelligence text-white hover:bg-blue-light disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+              >
+                {geocoding ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <MapPin className="w-3.5 h-3.5" />}
+                Locate
+              </button>
+            </div>
+            {geocodeError && (
+              <p className="text-[10px] text-warning mt-1">{geocodeError}</p>
+            )}
+            {siteSelection.geocoded && (
+              <p className="text-[10px] text-healthy mt-1">
+                Located: {siteSelection.geocoded.matchedAddress}
+                <span className="text-text-muted ml-1">
+                  (Tract {siteSelection.geocoded.tract}, County {siteSelection.geocoded.county})
+                </span>
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-[11px] uppercase tracking-wider text-text-muted font-medium mb-1.5">
@@ -104,7 +145,7 @@ export default function Step1SiteSelection() {
               />
             </div>
           </div>
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div>
             <label className="block text-[11px] uppercase tracking-wider text-text-muted font-medium mb-1.5">
               Site Description
             </label>
@@ -118,6 +159,9 @@ export default function Step1SiteSelection() {
           </div>
         </div>
       </div>
+
+      {/* Interactive Map with Parcel Scanner */}
+      <InteractiveMap />
 
       {/* Two-column layout for research content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

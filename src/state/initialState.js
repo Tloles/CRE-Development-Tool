@@ -114,6 +114,17 @@ export const initialState = {
   // Development activity / competing projects
   competingProjects: [],
 
+  // Parcel intelligence (Land Opportunity Scanner)
+  parcelIntelligence: {
+    preferences: {
+      minAcres: 1,
+      maxAssessedValue: null,
+      minOpportunityScore: 0,
+      vacantOnly: false,
+    },
+    watchlist: [],
+  },
+
   // Steps 3-9 state (placeholder — will be expanded later)
   reimagination: {},
   identity: {},
