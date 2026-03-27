@@ -1,10 +1,10 @@
 /**
- * Geocode an address using the US Census Geocoder.
+ * Geocode an address using the US Census Geocoder (proxied).
  * Returns { state, county, tract, lat, lng, geoid } or null.
  */
 export async function geocodeLocation(address) {
   const encoded = encodeURIComponent(address)
-  const url = `https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress?address=${encoded}&benchmark=Public_AR_Current&vintage=Census2020_Current&format=json`
+  const url = `/api/geocoder/geocoder/geographies/onelineaddress?address=${encoded}&benchmark=Public_AR_Current&vintage=Census2020_Current&format=json`
 
   try {
     const response = await fetch(url)
@@ -30,23 +30,23 @@ export async function geocodeLocation(address) {
 }
 
 /**
- * Fetch FRED economic data series.
+ * Fetch FRED economic data series (proxied).
  */
 export async function fetchFredSeries(seriesId, limit = 1) {
   const apiKey = import.meta.env.VITE_FRED_API_KEY
   if (!apiKey) return null
 
-  const url = `https://api.stlouisfed.org/fred/series/observations?series_id=${seriesId}&api_key=${apiKey}&file_type=json&sort_order=desc&limit=${limit}`
+  const url = `/api/fred/fred/series/observations?series_id=${seriesId}&api_key=${apiKey}&file_type=json&sort_order=desc&limit=${limit}`
   const response = await fetch(url)
   const data = await response.json()
   return data.observations
 }
 
 /**
- * Fetch FEMA flood zone for a point.
+ * Fetch FEMA flood zone for a point (proxied).
  */
 export async function fetchFloodZone(lat, lng) {
-  const url = `https://hazards.fema.gov/gis/nfhl/rest/services/public/NFHL/MapServer/28/query?geometry=${lng},${lat}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=FLD_ZONE,ZONE_SUBTY,SFHA_TF&returnGeometry=false&f=json`
+  const url = `/api/fema/gis/nfhl/rest/services/public/NFHL/MapServer/28/query?geometry=${lng},${lat}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=FLD_ZONE,ZONE_SUBTY,SFHA_TF&returnGeometry=false&f=json`
 
   try {
     const response = await fetch(url)

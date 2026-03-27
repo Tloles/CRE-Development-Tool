@@ -9,6 +9,21 @@ export default defineConfig({
   ],
   server: {
     proxy: {
+      '/api/geocoder': {
+        target: 'https://geocoding.geo.census.gov',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/geocoder/, ''),
+      },
+      '/api/fred': {
+        target: 'https://api.stlouisfed.org',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/fred/, ''),
+      },
+      '/api/fema': {
+        target: 'https://hazards.fema.gov',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/fema/, ''),
+      },
       '/api/gis-fulton': {
         target: 'https://gismaps.fultoncountyga.gov',
         changeOrigin: true,
