@@ -2,35 +2,33 @@ import { ProjectProvider, useProject } from './state/ProjectContext.jsx'
 import Header from './components/layout/Header.jsx'
 import StepNavigator from './components/layout/StepNavigator.jsx'
 import FinancialModelPanel from './components/layout/FinancialModelPanel.jsx'
-import Step1Inception from './components/steps/Step1Inception.jsx'
-import Step2Refinement from './components/steps/Step2Refinement.jsx'
-import Step3Feasibility from './components/steps/Step3Feasibility.jsx'
-import Step4Contracts from './components/steps/Step4Contracts.jsx'
-import Step5Financing from './components/steps/Step5Financing.jsx'
-import Step6Closing from './components/steps/Step6Closing.jsx'
-import Step7Construction from './components/steps/Step7Construction.jsx'
-import Step8Completion from './components/steps/Step8Completion.jsx'
-import Step9Management from './components/steps/Step9Management.jsx'
-import Step10Stabilization from './components/steps/Step10Stabilization.jsx'
-import Step11Exit from './components/steps/Step11Exit.jsx'
+import Step1SiteSelection from './components/steps/Step1SiteSelection.jsx'
+import Step2Assemblage from './components/steps/Step2Assemblage.jsx'
+import Step3Reimagination from './components/steps/Step3Reimagination.jsx'
+import Step4Identity from './components/steps/Step4Identity.jsx'
+import Step5MasterPlan from './components/steps/Step5MasterPlan.jsx'
+import Step6Entitlements from './components/steps/Step6Entitlements.jsx'
+import Step7Drivers from './components/steps/Step7Drivers.jsx'
+import Step8Infrastructure from './components/steps/Step8Infrastructure.jsx'
+import Step9Disposition from './components/steps/Step9Disposition.jsx'
+import StepProforma from './components/steps/StepProforma.jsx'
 
 const stepComponents = {
-  1: Step1Inception,
-  2: Step2Refinement,
-  3: Step3Feasibility,
-  4: Step4Contracts,
-  5: Step5Financing,
-  6: Step6Closing,
-  7: Step7Construction,
-  8: Step8Completion,
-  9: Step9Management,
-  10: Step10Stabilization,
-  11: Step11Exit,
+  1: Step1SiteSelection,
+  2: Step2Assemblage,
+  3: Step3Reimagination,
+  4: Step4Identity,
+  5: Step5MasterPlan,
+  6: Step6Entitlements,
+  7: Step7Drivers,
+  8: Step8Infrastructure,
+  9: Step9Disposition,
+  10: StepProforma,
 }
 
 function AppContent() {
   const { currentStep } = useProject()
-  const StepComponent = stepComponents[currentStep] || Step1Inception
+  const StepComponent = stepComponents[currentStep] || Step1SiteSelection
 
   return (
     <div className="min-h-screen flex flex-col bg-bg-primary">

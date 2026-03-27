@@ -4,7 +4,7 @@ import { sectors } from '../../data/sectors.js'
 import { callAnthropic } from '../../utils/api.js'
 import { sectorTrendsPrompt } from '../../utils/researchPrompts.js'
 import ResearchCard from '../shared/ResearchCard.jsx'
-import { Building, ChevronDown, Loader2 } from 'lucide-react'
+import { Building, ChevronDown } from 'lucide-react'
 
 export default function SectorResearch() {
   const { sector } = useProject()
@@ -61,7 +61,7 @@ export default function SectorResearch() {
               px-3 py-2.5 rounded-lg text-xs font-medium text-left transition-all border
               ${sector.selected === s.id
                 ? 'bg-gold/10 border-gold/30 text-gold'
-                : 'bg-bg-surface border-border-default text-text-secondary hover:border-border-default hover:text-text-primary'
+                : 'bg-bg-primary border-border-default text-text-secondary hover:border-border-strong hover:text-text-primary'
               }
             `}
           >
@@ -72,7 +72,7 @@ export default function SectorResearch() {
 
       {/* Subtype selector */}
       {selectedSector && sectorOpen && (
-        <div className="mb-4 p-3 rounded-lg bg-bg-surface border border-border-default">
+        <div className="mb-4 p-3 rounded-lg bg-bg-primary border border-border-default">
           <p className="text-[11px] uppercase tracking-wider text-text-muted font-medium mb-2">
             {selectedSector.name} Subtypes
           </p>
@@ -84,8 +84,8 @@ export default function SectorResearch() {
                 className={`
                   px-2.5 py-1.5 rounded-md text-xs transition-colors
                   ${sector.subtype === sub
-                    ? 'bg-gold text-bg-primary font-semibold'
-                    : 'bg-bg-card text-text-secondary hover:text-text-primary hover:bg-bg-card-hover'
+                    ? 'bg-gold text-white font-semibold'
+                    : 'bg-white text-text-secondary hover:text-text-primary hover:bg-bg-card-hover border border-border-default'
                   }
                 `}
               >
@@ -111,8 +111,8 @@ export default function SectorResearch() {
 
       {/* Trend results */}
       {sector.trends && (
-        <div className="mt-4 p-4 rounded-lg bg-bg-surface border border-border-default">
-          <p className="text-xs font-medium text-blue mb-2">Sector Trend Analysis</p>
+        <div className="mt-4 p-4 rounded-lg bg-bg-primary border border-border-default">
+          <p className="text-xs font-medium text-accent-intelligence mb-2">Sector Trend Analysis</p>
           <div className="text-xs text-text-secondary leading-relaxed whitespace-pre-wrap">
             {sector.trends}
           </div>

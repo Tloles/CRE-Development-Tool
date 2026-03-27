@@ -2,8 +2,8 @@ import { Loader2 } from 'lucide-react'
 
 export default function ResearchCard({ title, icon: Icon, children, loading, onResearch, researchLabel = 'Research' }) {
   return (
-    <div className="bg-bg-card rounded-xl border border-border-subtle overflow-hidden">
-      <div className="flex items-center justify-between px-5 py-3 border-b border-border-subtle">
+    <div className="bg-bg-card rounded-xl border border-border-default shadow-sm overflow-hidden">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-border-default">
         <div className="flex items-center gap-2">
           {Icon && <Icon className="w-4 h-4 text-gold" />}
           <h3 className="text-sm font-semibold text-text-primary">{title}</h3>

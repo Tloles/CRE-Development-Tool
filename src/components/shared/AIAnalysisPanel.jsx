@@ -19,14 +19,14 @@ export default function AIAnalysisPanel() {
       const prompt = customPrompt.trim() || aiAnalysisPrompt(sectorName, project.location, macro.indicators)
       const result = await callAnthropic({
         prompt,
-        systemPrompt: 'You are a senior CRE development advisor with 20+ years of experience. Provide concise, actionable analysis.',
+        systemPrompt: 'You are a senior land investment and CRE development advisor with 20+ years of experience. Provide concise, actionable analysis focused on land enhancement and acceleration strategies.',
         useWebSearch: true,
       })
       dispatch({
         type: 'ADD_AI_RESULT',
         payload: {
           id: Date.now(),
-          query: customPrompt.trim() || 'Feasibility Assessment',
+          query: customPrompt.trim() || 'Site Assessment',
           response: result,
           timestamp: new Date().toISOString(),
         },
@@ -38,9 +38,9 @@ export default function AIAnalysisPanel() {
   }
 
   return (
-    <div className="bg-bg-card rounded-xl border border-border-subtle overflow-hidden">
-      <div className="flex items-center gap-2 px-5 py-3 border-b border-border-subtle">
-        <BrainCircuit className="w-4 h-4 text-blue" />
+    <div className="bg-bg-card rounded-xl border border-border-default shadow-sm overflow-hidden">
+      <div className="flex items-center gap-2 px-5 py-3 border-b border-border-default">
+        <BrainCircuit className="w-4 h-4 text-accent-intelligence" />
         <h3 className="text-sm font-semibold text-text-primary">AI Analysis</h3>
       </div>
 
@@ -52,13 +52,13 @@ export default function AIAnalysisPanel() {
             value={customPrompt}
             onChange={(e) => setCustomPrompt(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && !aiAnalysis.loading && runAnalysis()}
-            placeholder="Ask about feasibility, risks, market conditions..."
-            className="flex-1 bg-bg-surface border border-border-default rounded-lg px-3 py-2 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-1 focus:ring-blue/50 focus:border-blue/50 transition-colors"
+            placeholder="Ask about site potential, risks, market conditions, path of progress..."
+            className="flex-1 bg-white border border-border-default rounded-lg px-3 py-2 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-1 focus:ring-accent-intelligence/50 focus:border-accent-intelligence/50 transition-colors"
           />
           <button
             onClick={runAnalysis}
             disabled={aiAnalysis.loading}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium bg-blue text-white hover:bg-blue-dim disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium bg-accent-intelligence text-white hover:bg-blue-light disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {aiAnalysis.loading ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -81,9 +81,9 @@ export default function AIAnalysisPanel() {
         {aiAnalysis.results.length > 0 ? (
           <div className="space-y-3">
             {aiAnalysis.results.map((result) => (
-              <div key={result.id} className="p-4 rounded-lg bg-bg-surface border border-border-default">
+              <div key={result.id} className="p-4 rounded-lg bg-bg-primary border border-border-default">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-medium text-blue">{result.query}</span>
+                  <span className="text-xs font-medium text-accent-intelligence">{result.query}</span>
                   <span className="text-[10px] text-text-muted">
                     {new Date(result.timestamp).toLocaleTimeString()}
                   </span>
@@ -97,7 +97,7 @@ export default function AIAnalysisPanel() {
         ) : (
           !aiAnalysis.loading && (
             <p className="text-xs text-text-muted text-center py-4">
-              Run AI analysis to get a feasibility assessment based on your project parameters.
+              Run AI analysis to get a site assessment based on your project parameters.
               {!sectorName && ' Select a sector first for more targeted analysis.'}
             </p>
           )

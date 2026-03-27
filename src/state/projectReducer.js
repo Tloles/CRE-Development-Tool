@@ -8,6 +8,112 @@ export function projectReducer(state, action) {
     case 'UPDATE_PROJECT':
       return { ...state, project: { ...state.project, ...action.payload } }
 
+    // --- Site Selection ---
+    case 'SET_GEOCODED':
+      return {
+        ...state,
+        siteSelection: { ...state.siteSelection, geocoded: action.payload },
+      }
+
+    case 'ADD_PATH_OF_PROGRESS':
+      return {
+        ...state,
+        siteSelection: {
+          ...state.siteSelection,
+          pathOfProgress: [...state.siteSelection.pathOfProgress, action.payload],
+        },
+      }
+
+    case 'UPDATE_PATH_OF_PROGRESS': {
+      const { id, ...updates } = action.payload
+      return {
+        ...state,
+        siteSelection: {
+          ...state.siteSelection,
+          pathOfProgress: state.siteSelection.pathOfProgress.map(
+            (entry) => entry.id === id ? { ...entry, ...updates } : entry
+          ),
+        },
+      }
+    }
+
+    case 'REMOVE_PATH_OF_PROGRESS':
+      return {
+        ...state,
+        siteSelection: {
+          ...state.siteSelection,
+          pathOfProgress: state.siteSelection.pathOfProgress.filter(
+            (entry) => entry.id !== action.payload
+          ),
+        },
+      }
+
+    case 'UPDATE_ZONING':
+      return {
+        ...state,
+        siteSelection: {
+          ...state.siteSelection,
+          zoning: { ...state.siteSelection.zoning, ...action.payload },
+        },
+      }
+
+    case 'UPDATE_INFRASTRUCTURE':
+      return {
+        ...state,
+        siteSelection: {
+          ...state.siteSelection,
+          infrastructure: { ...state.siteSelection.infrastructure, ...action.payload },
+        },
+      }
+
+    case 'UPDATE_ENVIRONMENTAL':
+      return {
+        ...state,
+        siteSelection: {
+          ...state.siteSelection,
+          environmental: { ...state.siteSelection.environmental, ...action.payload },
+        },
+      }
+
+    // --- Assemblage ---
+    case 'ADD_PARCEL':
+      return {
+        ...state,
+        assemblage: {
+          ...state.assemblage,
+          parcels: [...state.assemblage.parcels, action.payload],
+        },
+      }
+
+    case 'UPDATE_PARCEL': {
+      const { id: parcelId, ...parcelUpdates } = action.payload
+      return {
+        ...state,
+        assemblage: {
+          ...state.assemblage,
+          parcels: state.assemblage.parcels.map(
+            (p) => p.id === parcelId ? { ...p, ...parcelUpdates } : p
+          ),
+        },
+      }
+    }
+
+    case 'REMOVE_PARCEL':
+      return {
+        ...state,
+        assemblage: {
+          ...state.assemblage,
+          parcels: state.assemblage.parcels.filter((p) => p.id !== action.payload),
+        },
+      }
+
+    case 'UPDATE_ASSEMBLAGE_SETTINGS':
+      return {
+        ...state,
+        assemblage: { ...state.assemblage, ...action.payload },
+      }
+
+    // --- Existing actions (kept) ---
     case 'SET_MACRO_LOADING':
       return { ...state, macro: { ...state.macro, loading: true, error: null } }
 
@@ -29,7 +135,6 @@ export function projectReducer(state, action) {
       return {
         ...state,
         sector: { ...state.sector, selected: action.payload.sector, subtype: action.payload.subtype },
-        project: { ...state.project, sector: action.payload.sector, subtype: action.payload.subtype },
       }
     }
 

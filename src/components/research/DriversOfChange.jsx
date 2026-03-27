@@ -31,13 +31,13 @@ export default function DriversOfChange() {
                 flex items-start gap-3 p-3 rounded-lg text-left transition-all border
                 ${isSelected
                   ? 'bg-gold/8 border-gold/25 ring-1 ring-gold/15'
-                  : 'bg-bg-surface border-border-default hover:border-border-default hover:bg-bg-card'
+                  : 'bg-bg-primary border-border-default hover:border-border-strong hover:bg-bg-card-hover'
                 }
               `}
             >
               <div className={`
                 w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5
-                ${isSelected ? 'bg-gold/15 text-gold' : 'bg-bg-card text-text-muted'}
+                ${isSelected ? 'bg-gold/15 text-gold' : 'bg-white text-text-muted border border-border-default'}
               `}>
                 <Icon className="w-4 h-4" />
               </div>

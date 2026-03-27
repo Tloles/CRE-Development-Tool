@@ -1,18 +1,63 @@
 export const initialState = {
-  // Current step (1-11)
   currentStep: 1,
 
-  // Project definition
+  // Project definition (updated for land enhancement model)
   project: {
     name: '',
-    sector: '',
-    subtype: '',
     location: '',
     description: '',
-    scale: '',
+    totalAcreage: null,
+    targetAcquisitionPrice: null,
+    currentUse: '',
   },
 
-  // Step 1: Macro & Sector Research
+  // Step 1: Site Selection data
+  siteSelection: {
+    geocoded: null,
+    pathOfProgress: [],
+    zoning: {
+      currentZoning: '',
+      permittedUses: '',
+      maxDensityFAR: null,
+      maxHeight: null,
+      heightUnit: 'feet',
+      setbacks: { front: null, rear: null, sideLeft: null, sideRight: null },
+      overlayDistricts: '',
+      minLotSize: null,
+      source: '',
+    },
+    infrastructure: {
+      highwayProximity: { distance: '', name: '' },
+      nearestTransit: { distance: '', type: '' },
+      roadFrontage: null,
+      adt: null,
+      adtSource: '',
+      ingressEgress: { count: null, description: '' },
+      utilities: {
+        water: 'Unknown',
+        sewer: 'Unknown',
+        electric: 'Unknown',
+        gas: 'Unknown',
+        fiber: 'Unknown',
+      },
+    },
+    environmental: {
+      phaseIStatus: 'Not Started',
+      geotechStatus: 'Not Started',
+      wetlands: '',
+      topographyNotes: '',
+    },
+  },
+
+  // Step 2: Assemblage
+  assemblage: {
+    parcels: [],
+    closingCostPercent: 2,
+    carryRate: 6.5,
+    demolitionEstimate: 0,
+  },
+
+  // Macro research (kept from existing)
   macro: {
     indicators: {
       fedFundsRate: null,
@@ -39,14 +84,11 @@ export const initialState = {
     research: {},
   },
 
-  // Financial Model (continuous)
+  // Financial Model (kept from existing — will be refactored later)
   financial: {
-    // Spread Calculator
     noi: 8000000,
     tcd: 100000000,
     exitCapRate: 6.5,
-
-    // Derived (calculated in reducer)
     developerYield: 0,
     developerSpread: 0,
     impliedSalesPrice: 0,
@@ -60,7 +102,7 @@ export const initialState = {
     error: null,
   },
 
-  // Research results per step
+  // Research results cache
   research: {
     step1: null,
     step2: null,
@@ -68,4 +110,16 @@ export const initialState = {
     step5: null,
     step11: null,
   },
+
+  // Development activity / competing projects
+  competingProjects: [],
+
+  // Steps 3-9 state (placeholder — will be expanded later)
+  reimagination: {},
+  identity: {},
+  masterPlan: {},
+  entitlements: {},
+  driversAndUsers: {},
+  infrastructureDev: {},
+  disposition: {},
 }

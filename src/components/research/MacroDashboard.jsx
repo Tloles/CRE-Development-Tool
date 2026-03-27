@@ -4,7 +4,7 @@ import { callAnthropic } from '../../utils/api.js'
 import { macroResearchPrompt } from '../../utils/researchPrompts.js'
 import ResearchCard from '../shared/ResearchCard.jsx'
 import {
-  Landmark, Building2, TrendingUp, Users, FileText, RefreshCw, Clock, AlertCircle
+  Landmark, Building2, TrendingUp, Users, FileText, Clock, AlertCircle
 } from 'lucide-react'
 
 const iconMap = {
@@ -23,9 +23,6 @@ export default function MacroDashboard() {
         systemPrompt: 'You are a financial data research assistant. Return precise, current data. Be concise.',
         useWebSearch: true,
       })
-
-      // Parse the AI response into structured data
-      // For now, store the raw response and display it
       dispatch({
         type: 'SET_MACRO_DATA',
         payload: { rawAnalysis: result },
@@ -62,7 +59,7 @@ export default function MacroDashboard() {
           return (
             <div
               key={indicator.id}
-              className="bg-bg-surface rounded-lg p-3 border border-border-default"
+              className="bg-bg-primary rounded-lg p-3 border border-border-default"
             >
               <div className="flex items-center gap-1.5 mb-2">
                 <Icon className="w-3.5 h-3.5 text-text-muted" />
@@ -81,10 +78,10 @@ export default function MacroDashboard() {
 
       {/* Live analysis display */}
       {macro.indicators.rawAnalysis && (
-        <div className="mt-4 p-4 rounded-lg bg-bg-surface border border-border-default">
+        <div className="mt-4 p-4 rounded-lg bg-bg-primary border border-border-default">
           <div className="flex items-center gap-2 mb-2">
-            <Clock className="w-3.5 h-3.5 text-blue" />
-            <span className="text-xs font-medium text-blue">Live Research Results</span>
+            <Clock className="w-3.5 h-3.5 text-accent-intelligence" />
+            <span className="text-xs font-medium text-accent-intelligence">Live Research Results</span>
             {macro.lastFetched && (
               <span className="text-[10px] text-text-muted ml-auto">
                 {new Date(macro.lastFetched).toLocaleString()}

@@ -22,7 +22,7 @@ export default function FinancialModelPanel() {
   }
 
   return (
-    <div className="border-t border-border-default bg-bg-surface">
+    <div className="border-t border-border-default bg-white">
       <div className="max-w-[1600px] mx-auto px-6">
         {/* Toggle bar */}
         <button
@@ -91,7 +91,7 @@ function MetricCard({ label, value, health, icon: Icon }) {
   }
 
   return (
-    <div className="bg-bg-card rounded-lg px-3 py-2.5 border border-border-subtle">
+    <div className="bg-bg-primary rounded-lg px-3 py-2.5 border border-border-default">
       <div className="flex items-center gap-1.5 mb-1">
         <Icon className="w-3 h-3 text-text-muted" />
         <span className="text-[10px] uppercase tracking-wider text-text-muted font-medium">{label}</span>

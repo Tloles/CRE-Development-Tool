@@ -16,8 +16,8 @@ export default function SpreadCalculator() {
   }
 
   return (
-    <div className="bg-bg-card rounded-xl border border-border-subtle overflow-hidden">
-      <div className="flex items-center gap-2 px-5 py-3 border-b border-border-subtle">
+    <div className="bg-bg-card rounded-xl border border-border-default shadow-sm overflow-hidden">
+      <div className="flex items-center gap-2 px-5 py-3 border-b border-border-default">
         <Calculator className="w-4 h-4 text-gold" />
         <h3 className="text-sm font-semibold text-text-primary">Developer's Targeted Spread</h3>
         <TrafficLight status={health.color} label={health.label} />
@@ -72,7 +72,7 @@ export default function SpreadCalculator() {
         </div>
 
         {/* Benchmark reference */}
-        <div className="p-3 rounded-lg bg-bg-surface border border-border-default">
+        <div className="p-3 rounded-lg bg-bg-primary border border-border-default">
           <div className="flex items-center gap-1.5 mb-2">
             <Info className="w-3 h-3 text-text-muted" />
             <span className="text-[10px] uppercase tracking-wider text-text-muted font-medium">
@@ -106,7 +106,7 @@ function InputField({ label, value, onChange, prefix, suffix, step = '1', format
           onChange={(e) => onChange(e.target.value)}
           step={step}
           className={`
-            w-full bg-bg-surface border border-border-default rounded-lg px-3 py-2 text-sm font-mono text-text-primary
+            w-full bg-white border border-border-default rounded-lg px-3 py-2 text-sm font-mono text-text-primary
             focus:outline-none focus:ring-1 focus:ring-gold/50 focus:border-gold/50 transition-colors
             ${prefix ? 'pl-7' : ''} ${suffix ? 'pr-7' : ''}
           `}
@@ -130,7 +130,7 @@ function ResultBox({ label, value, health }) {
   }
 
   return (
-    <div className="bg-bg-surface rounded-lg p-3 border border-border-default text-center">
+    <div className="bg-bg-primary rounded-lg p-3 border border-border-default text-center">
       <p className="text-[10px] uppercase tracking-wider text-text-muted font-medium mb-1">{label}</p>
       <p className={`text-lg font-mono font-bold ${health ? colors[health.color] : 'text-text-primary'}`}>
         {value}
@@ -141,7 +141,7 @@ function ResultBox({ label, value, health }) {
 
 function BenchmarkRow({ tcd, noi, cap, spread, profit, status }) {
   return (
-    <div className="flex items-center justify-between text-[11px] font-mono bg-bg-card rounded px-2 py-1.5">
+    <div className="flex items-center justify-between text-[11px] font-mono bg-white rounded px-2 py-1.5 border border-border-subtle">
       <span className="text-text-muted">{tcd} TCD, {noi} NOI, {cap} cap</span>
       <span className={status === 'healthy' ? 'text-healthy font-medium' : 'text-warning font-medium'}>
         {spread}

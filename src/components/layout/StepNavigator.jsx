@@ -1,26 +1,26 @@
 import { useProject, useDispatch } from '../../state/ProjectContext.jsx'
 import {
-  Lightbulb, Search, BarChart3, FileText, Wallet,
-  GanttChart, Hammer, CheckCircle2, Building, Target, LogOut
+  Search, Layers, Sparkles, Fingerprint, LayoutDashboard,
+  Scale, Users, Hammer, ArrowRightLeft, Calculator
 } from 'lucide-react'
 
 const steps = [
-  { num: 1, name: 'Inception', icon: Lightbulb, layer: 'research' },
-  { num: 2, name: 'Refinement', icon: Search, layer: 'research' },
-  { num: 3, name: 'Feasibility', icon: BarChart3, layer: 'research' },
-  { num: 4, name: 'Contracts', icon: FileText, layer: 'scenario' },
-  { num: 5, name: 'Financing', icon: Wallet, layer: 'research' },
-  { num: 6, name: 'Closing', icon: GanttChart, layer: 'scenario' },
-  { num: 7, name: 'Construction', icon: Hammer, layer: 'scenario' },
-  { num: 8, name: 'Completion', icon: CheckCircle2, layer: 'scenario' },
-  { num: 9, name: 'Management', icon: Building, layer: 'scenario' },
-  { num: 10, name: 'Stabilization', icon: Target, layer: 'scenario' },
-  { num: 11, name: 'Exit', icon: LogOut, layer: 'research' },
+  { num: 1, name: 'Site Selection', icon: Search, section: 'intelligence' },
+  { num: 2, name: 'Assemblage', icon: Layers, section: 'intelligence' },
+  { num: 3, name: 'Reimagination', icon: Sparkles, section: 'enhancement' },
+  { num: 4, name: 'Identity', icon: Fingerprint, section: 'enhancement' },
+  { num: 5, name: 'Master Plan', icon: LayoutDashboard, section: 'enhancement' },
+  { num: 6, name: 'Entitlements', icon: Scale, section: 'enhancement' },
+  { num: 7, name: 'Drivers & Users', icon: Users, section: 'enhancement' },
+  { num: 8, name: 'Infrastructure', icon: Hammer, section: 'execution' },
+  { num: 9, name: 'Disposition', icon: ArrowRightLeft, section: 'execution' },
+  { num: 10, name: 'Proforma', icon: Calculator, section: 'execution', label: 'P' },
 ]
 
-const layerColors = {
-  research: 'blue',
-  scenario: 'gold',
+const sectionAccents = {
+  intelligence: { bg: 'bg-accent-intelligence', text: 'text-accent-intelligence' },
+  enhancement: { bg: 'bg-accent-enhancement', text: 'text-accent-enhancement' },
+  execution: { bg: 'bg-accent-execution', text: 'text-accent-execution' },
 }
 
 export default function StepNavigator() {
@@ -28,43 +28,44 @@ export default function StepNavigator() {
   const dispatch = useDispatch()
 
   return (
-    <nav className="border-b border-border-default bg-bg-surface/50">
+    <nav className="bg-navy">
       <div className="max-w-[1600px] mx-auto px-6">
         <div className="flex gap-0.5 overflow-x-auto py-2 scrollbar-hide">
-          {steps.map((step) => {
+          {steps.map((step, idx) => {
             const Icon = step.icon
             const isActive = currentStep === step.num
-            const color = layerColors[step.layer]
-            const isResearch = step.layer === 'research'
+            const accent = sectionAccents[step.section]
+            const prevStep = steps[idx - 1]
+            const showDivider = prevStep && prevStep.section !== step.section
 
             return (
-              <button
-                key={step.num}
-                onClick={() => dispatch({ type: 'SET_STEP', payload: step.num })}
-                className={`
-                  flex items-center gap-1.5 px-3 py-2 rounded-md text-xs font-medium whitespace-nowrap transition-all
-                  ${isActive
-                    ? isResearch
-                      ? 'bg-blue/10 text-blue'
-                      : 'bg-gold/10 text-gold'
-                    : 'text-text-muted hover:text-text-secondary hover:bg-bg-card'
-                  }
-                `}
-              >
-                <span className={`
-                  w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0
-                  ${isActive
-                    ? isResearch
-                      ? 'bg-blue text-white'
-                      : 'bg-gold text-bg-primary'
-                    : 'bg-bg-card text-text-muted'
-                  }
-                `}>
-                  {step.num}
-                </span>
-                <Icon className="w-3.5 h-3.5 shrink-0 hidden sm:block" />
-                <span className="hidden md:inline">{step.name}</span>
-              </button>
+              <div key={step.num} className="flex items-center">
+                {showDivider && (
+                  <div className="w-px h-6 bg-text-on-navy-muted/20 mx-1.5 shrink-0" />
+                )}
+                <button
+                  onClick={() => dispatch({ type: 'SET_STEP', payload: step.num })}
+                  className={`
+                    flex items-center gap-1.5 px-3 py-2 rounded-md text-xs font-medium whitespace-nowrap transition-all
+                    ${isActive
+                      ? `${accent.bg} text-white`
+                      : 'text-text-on-navy-muted hover:bg-navy-light hover:text-text-on-navy'
+                    }
+                  `}
+                >
+                  <span className={`
+                    w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0
+                    ${isActive
+                      ? 'bg-white/20 text-white'
+                      : 'bg-navy-light text-text-on-navy-muted'
+                    }
+                  `}>
+                    {step.label || step.num}
+                  </span>
+                  <Icon className="w-3.5 h-3.5 shrink-0 hidden sm:block" />
+                  <span className="hidden md:inline">{step.name}</span>
+                </button>
+              </div>
             )
           })}
         </div>
